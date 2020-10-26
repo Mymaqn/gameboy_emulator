@@ -158,78 +158,78 @@ FlagsRegister registers_RegfToFlagsRegister(unsigned char f){
 
 
 //Testing
-int main(void){
-  Reg r1;
-  FlagsRegister flagReg;
-
-  r1.a = 10;
-  r1.f = 20;
-  r1.b = 10;
-  r1.c = 20;
-  r1.d = 10;
-  r1.e = 20;
-  r1.h = 10;
-  r1.l = 20;
-
-  printf("\nTesting all registers with values 10 and 20 expecting output of 2580\n");
-  printf("af: %d\n",registers_getaf(&r1));
-  printf("bc: %d\n",registers_getbc(&r1));
-  printf("de: %d\n",registers_getde(&r1));
-  printf("hl: %d\n",registers_gethl(&r1));
-
-  printf("Emptying all registers...\n\n");
-  r1.a = 0;
-  r1.f = 0;
-  r1.b = 0;
-  r1.c = 0;
-  r1.d = 0;
-  r1.e = 0;
-  r1.h = 0;
-  r1.l = 0;
-
-  printf("Filling all virtual registers with value of 2580 expecting output of 10 and 20\n");
-  registers_setaf(&r1, 2580);
-  registers_setbc(&r1, 2580);
-  registers_setde(&r1, 2580);
-  registers_sethl(&r1, 2580);
-
-  printf("a: %d, f: %d\n",r1.a,r1.f);
-  printf("b: %d, c: %d\n",r1.b,r1.c);
-  printf("d: %d, e: %d\n",r1.d,r1.e);
-  printf("h: %d, l: %d\n",r1.h,r1.l);
-
-
-  printf("\nChecking FlagsRegister...\n");
-  flagReg.zero = true;
-  flagReg.subtract = true;
-  flagReg.half_carry = false;
-  flagReg.carry = false;
-
-  printf("Flag register set to:\n");
-  printf("Zero_flag: %d\n",flagReg.zero);
-  printf("Subtract_flag: %d\n",flagReg.subtract);
-  printf("Half_carry_flag: %d\n",flagReg.half_carry);
-  printf("Carry_flag: %d\n",flagReg.carry);
-
-  printf("\nExpecting value: %d\n",0xF0);
-  unsigned char f = registers_FlagsRegisterToRegf(flagReg);
-  printf("Flag Value: %d\n",f);
-
-  printf("\nZeroing out flagRegister...\n");
-  flagReg.zero = false;
-  flagReg.subtract = false;
-  flagReg.half_carry = false;
-  flagReg.carry = false;
-
-  printf("Trying to set the flags with function.. Expecting all flags to be set\n");
-  flagReg = registers_RegfToFlagsRegister(f);
-
-  printf("Flag register set to:\n");
-  printf("Zero_flag: %d\n",flagReg.zero);
-  printf("Subtract_flag: %d\n",flagReg.subtract);
-  printf("Half_carry_flag: %d\n",flagReg.half_carry);
-  printf("Carry_flag: %d\n",flagReg.carry);
-
-
-  printf("Testing complete.\n");
-}
+// int main(void){
+//   Reg r1;
+//   FlagsRegister flagReg;
+//
+//   r1.a = 10;
+//   r1.f = 20;
+//   r1.b = 10;
+//   r1.c = 20;
+//   r1.d = 10;
+//   r1.e = 20;
+//   r1.h = 10;
+//   r1.l = 20;
+//
+//   printf("\nTesting all registers with values 10 and 20 expecting output of 2580\n");
+//   printf("af: %d\n",registers_getaf(&r1));
+//   printf("bc: %d\n",registers_getbc(&r1));
+//   printf("de: %d\n",registers_getde(&r1));
+//   printf("hl: %d\n",registers_gethl(&r1));
+//
+//   printf("Emptying all registers...\n\n");
+//   r1.a = 0;
+//   r1.f = 0;
+//   r1.b = 0;
+//   r1.c = 0;
+//   r1.d = 0;
+//   r1.e = 0;
+//   r1.h = 0;
+//   r1.l = 0;
+//
+//   printf("Filling all virtual registers with value of 2580 expecting output of 10 and 20\n");
+//   registers_setaf(&r1, 2580);
+//   registers_setbc(&r1, 2580);
+//   registers_setde(&r1, 2580);
+//   registers_sethl(&r1, 2580);
+//
+//   printf("a: %d, f: %d\n",r1.a,r1.f);
+//   printf("b: %d, c: %d\n",r1.b,r1.c);
+//   printf("d: %d, e: %d\n",r1.d,r1.e);
+//   printf("h: %d, l: %d\n",r1.h,r1.l);
+//
+//
+//   printf("\nChecking FlagsRegister...\n");
+//   flagReg.zero = true;
+//   flagReg.subtract = true;
+//   flagReg.half_carry = false;
+//   flagReg.carry = false;
+//
+//   printf("Flag register set to:\n");
+//   printf("Zero_flag: %d\n",flagReg.zero);
+//   printf("Subtract_flag: %d\n",flagReg.subtract);
+//   printf("Half_carry_flag: %d\n",flagReg.half_carry);
+//   printf("Carry_flag: %d\n",flagReg.carry);
+//
+//   printf("\nExpecting value: %d\n",0xF0);
+//   unsigned char f = registers_FlagsRegisterToRegf(flagReg);
+//   printf("Flag Value: %d\n",f);
+//
+//   printf("\nZeroing out flagRegister...\n");
+//   flagReg.zero = false;
+//   flagReg.subtract = false;
+//   flagReg.half_carry = false;
+//   flagReg.carry = false;
+//
+//   printf("Trying to set the flags with function.. Expecting all flags to be set\n");
+//   flagReg = registers_RegfToFlagsRegister(f);
+//
+//   printf("Flag register set to:\n");
+//   printf("Zero_flag: %d\n",flagReg.zero);
+//   printf("Subtract_flag: %d\n",flagReg.subtract);
+//   printf("Half_carry_flag: %d\n",flagReg.half_carry);
+//   printf("Carry_flag: %d\n",flagReg.carry);
+//
+//
+//   printf("Testing complete.\n");
+// }
