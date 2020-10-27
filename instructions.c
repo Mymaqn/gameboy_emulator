@@ -127,6 +127,47 @@ void instructions_adc(Reg* reg, enum ArithmeticTarget target){
 
 }
 
+void instructions_addhl(Reg* reg, enum ArithmeticTarget target){
+  unsigned char value = instructions_getTargetValue(reg, target);
+
+  FlagsRegister flags = registers_RegfToFlagsRegister(reg->f);
+  unsigned short hl = registers_gethl(reg);
+  //Check for carry/overflow. This needs to be done before adding.
+  if (value > (USHRT_MAX - hl)) {
+    flags.carry = true;
+  }
+  else{
+    flags.carry = false;
+  }
+  //Check for half-carry 0000 1111 1111 1111
+  if( ((hl & 0xFFF) + (value & 0xFF)) > 0xFFF){
+    flags.half_carry = true;
+  }
+  else{
+    flags.half_carry = false;
+  }
+
+  hl = hl+value;
+
+  //Check if the output is 0
+  if(hl == 0){
+    flags.zero = true;
+  }
+  else{
+    flags.zero = false;
+  }
+
+  flags.subtract = false;
+
+  //Set the f register
+  reg->f = registers_FlagsRegisterToRegf(flags);
+
+  //Set the hl register
+  registers_sethl(reg,hl);
+
+  return;
+}
+
 
 
 
@@ -144,8 +185,22 @@ int main(void){
   reg1.c = 220;
 
   printf("\nExpecting f to be 32 and a to be 225\nf:%d\na:%d",reg1.f,reg1.a);
-  FlagsRegister flags = registers_RegfToFlagsRegister(32);
-  printf("Flags: %d, %d, %d, %d",flags.zero,flags.carry,flags.half_carry,flags.subtract);
+  FlagsRegister flags = registers_RegfToFlagsRegister(reg1.f);
+  printf("Flags: %d, %d, %d, %d\n",flags.zero,flags.carry,flags.half_carry,flags.subtract);
+
+  reg1.h = 0xF;
+  reg1.l = 0xFF;
+  reg1.c = 1;
+  instructions_addhl(&reg1,C);
+  flags = registers_RegfToFlagsRegister(reg1.f);
+  printf("Expecting hl to be 300\nhl:%d",registers_gethl(&reg1));
+  printf("Expecting no flags to be set\nflags:\nzero:%d\ncarry:%d\nhalfcarry:%d\nsubtract:%d\n",flags.zero,flags.carry,flags.half_carry,flags.subtract);
+
+
+
+
+
+
 
 
 }
